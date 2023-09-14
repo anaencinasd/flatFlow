@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse as HttpJsonResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -21,13 +24,18 @@ class UserController extends Controller
 
     public function store(UserRequest $request):JsonResponse
     {
-        $user=User::create($request->all());
+        $user=User::create([
+            'username'=>$request->username,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password)
+        ]);
 
         return response()->json([
             'status'=>true,
             'message'=>"El usuario se ha creado correctamente",
+            'data'=>$user,
             'token'=>$user->createToken("API TOKEN")->plainTextToken
-        ], 201);
+        ], 200);
     }
 
     public function show ($id):JsonResponse
@@ -69,6 +77,24 @@ class UserController extends Controller
             'success'=>true
         ], 200);
 
+    }
+
+    public function loginUser(LoginRequest $request)
+    {
+        if(!Auth::attempt($request->only(['email', 'password']))){
+            return response ()->json([
+                'status'=>false,
+                'message'=>'El email o contraseña no coinciden con nuestros registros'
+            ], 401);
+
+        }
+
+        $user = User::where('email', $request->email)->first();
+        return response()->json([
+            'status'=>true,
+            'message'=>'El inicio de sesión se hizo de forma satisfactoria',
+            'token'=>$user->createToken("API TOKEN")->plainTextToken], 200);
+        
     }
     
 }
