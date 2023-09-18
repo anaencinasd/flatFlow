@@ -49,13 +49,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/{id}', [UserController::class, 'show']);
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
-    Route::resource('/task', TaskController::class);
-    Route::resource('/balance', BalanceController::class);
-    Route::resource('/expense', ExpenseController::class);
-    Route::resource('/forum', ForumController::class);
-    Route::resource('/group', GroupController::class);
-    Route::resource('/status', StatusController::class);    
+       
 });
+
+Route::resource('/task', TaskController::class);
+Route::resource('/balance', BalanceController::class);
+Route::resource('/expense', ExpenseController::class);
+Route::resource('/forum', ForumController::class);
+Route::resource('/group', GroupController::class);
+Route::resource('/status', StatusController::class);
 
 
 

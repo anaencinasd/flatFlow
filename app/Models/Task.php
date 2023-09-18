@@ -13,7 +13,7 @@ class Task extends Model
         'title',
         'description',
         'id_user',
-        'id_status'
+        
         
     ];
 
