@@ -36,7 +36,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/user', [UserController::class, 'store']);
 Route::post('/register', [UserController::class, 'store']);
-Route::post('/login', [UserController::class, 'loginUser']);
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+
+
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -49,15 +53,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/{id}', [UserController::class, 'show']);
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
-       
-});
+    Route::get('/task/alltasks', [TaskController::class, 'indexTasks']);
 
-Route::resource('/task', TaskController::class);
+    Route::resource('/task', TaskController::class);
 Route::resource('/balance', BalanceController::class);
 Route::resource('/expense', ExpenseController::class);
 Route::resource('/forum', ForumController::class);
 Route::resource('/group', GroupController::class);
 Route::resource('/status', StatusController::class);
+       
+});
+
+
 
 
 

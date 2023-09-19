@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse as HttpJsonResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
+
 class UserController extends Controller
 {
     public function index():JsonResponse
@@ -79,22 +80,38 @@ class UserController extends Controller
 
     }
 
-    public function loginUser(LoginRequest $request)
-    {
-        if(!Auth::attempt($request->only(['email', 'password']))){
-            return response ()->json([
-                'status'=>false,
-                'message'=>'El email o contraseña no coinciden con nuestros registros'
-            ], 401);
+    public function login(Request $request)
+{
+    $attr = $request->validate([
+        'email' => 'required|string|email|',
+        'password' => 'required|string|min:6'
+    ]);
 
-        }
-
-        $user = User::where('email', $request->email)->first();
+    if (!Auth::attempt($attr)) {
         return response()->json([
-            'status'=>true,
-            'message'=>'El inicio de sesión se hizo de forma satisfactoria',
-            'token'=>$user->createToken("API TOKEN")->plainTextToken], 200);
+            'message' => 'Credenciales no coinciden',
+        ], 401);
+    }
+
+    $user = Auth::user();
+    $token = $user->createToken('auth_token');
+    
+    return response()->json([
+        'access_token' => $token->plainTextToken,
+        'token_type' => 'Bearer',
+    ]);
+}
+
+    public function logout(Request $request)
+    {
         
+        Auth::user()->tokens->each(function ($token, $key) {
+            $token->delete();
+        });
+
+        return response()->json([
+            'message' => 'Sesión cerrada exitosamente',
+        ]);
     }
     
 }

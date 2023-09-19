@@ -6,11 +6,22 @@ use Illuminate\Http\Request;
 use App\Models\Task;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Http\Requests\TaskRequest;
+use Illuminate\Support\Facades\Auth;
 
 
 class TaskController extends Controller
 {
     public function index():JsonResponse
+    {
+        $user = Auth::user();
+        $task = Task::where('id_user', $user->id)->get();
+           
+        
+        return response()->json(['data' => $task], 200);
+        
+    }
+
+    public function indexTasks():JsonResponse
     {
         
             $task = Task::all();
