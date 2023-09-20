@@ -23,6 +23,19 @@ class UserController extends Controller
         
     }
 
+    public function getAuthenticatedUser(): JsonResponse
+{
+    $user = Auth::user();
+
+    if (!$user) {
+        return response()->json([
+            'message' => 'Usuario no autenticado',
+        ], 401);
+    }
+
+    return response()->json(['data' => $user], 200);
+}
+
     public function store(UserRequest $request):JsonResponse
     {
         $user=User::create([
@@ -30,6 +43,8 @@ class UserController extends Controller
             'email'=>$request->email,
             'password'=>Hash::make($request->password)
         ]);
+
+        auth()->login($user);
 
         return response()->json([
             'status'=>true,

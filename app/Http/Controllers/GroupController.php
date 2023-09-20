@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Http\Requests\GroupRequest;
+use App\Models\GroupUser;
 
 use Illuminate\Http\Request;
 
@@ -19,15 +20,24 @@ class GroupController extends Controller
         
     }
 
-    public function store(GroupRequest $request):JsonResponse
-    {
-        $group=Group::create($request->all());
+    public function store(GroupRequest $request): JsonResponse
+{
+    
+    $group = Group::create($request->all());
 
-        return response()->json([
-            'success'=>true,
-            'data'=>$group
-        ], 201);
-    }
+    
+    $user = auth()->user();
+    $groupUser = new GroupUser();
+    $groupUser->id_user = $user->id;
+    $groupUser->id_group = $group->id;
+    $groupUser->save();
+
+    return response()->json([
+        'success' => true,
+        'data' => $group
+    ], 201);
+}
+
 
     public function show ($id):JsonResponse
     {

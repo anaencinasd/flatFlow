@@ -39,6 +39,14 @@ Route::post('/register', [UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 
+//Group_user routes
+
+Route::post('/addusertogroup', [Group_userController::class, 'addUserToGroup'])->name('addUserToGroup');
+Route::post('/removeuserfromgroup', [Group_userController::class, 'removeUserFromGroup'])->name('removeUserFromGroup');
+Route::post('/getgroups', [Group_userController::class, 'getGroupsForUser'])->name('getGroupsForUser');
+
+
+
 
 
 
@@ -49,7 +57,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    // Route::get('/user', [UserController::class, 'index']);
+    Route::get('/user/getuser', [UserController::class, 'getAuthenticatedUser']);
     Route::get('/user/{id}', [UserController::class, 'show']);
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);

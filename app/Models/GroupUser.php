@@ -13,4 +13,13 @@ class GroupUser extends Model
          'id_user',
     ];
 
+    public function group(){
+        return $this->belongsToMany(Group::class, 'id_group', 'id');
+    }
+
+    public function user(){
+        return $this->belongsToMany(User::class, 'id_user', 'id');
+    }
+
+
 }
