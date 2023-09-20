@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->text('description');
+        Schema::create('group_users', function (Blueprint $table) {
+            $table->bigInteger('id_group');
             $table->bigInteger('id_user');
-            $table->bigInteger('id_status')->default(1);
-            $table->date('deadline');
-            $table->bigInteger('id_category');
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('task');
+        Schema::dropIfExists('group_users');
     }
 };

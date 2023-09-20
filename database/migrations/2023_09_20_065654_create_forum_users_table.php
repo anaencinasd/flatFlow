@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('group_users', function (Blueprint $table) {
+        Schema::create('forum_users', function (Blueprint $table) {
+            $table->bigInteger('id_forum');
             $table->bigInteger('id_group');
-            $table->bigInteger('id_user');
+            $table->text('message');
             $table->timestamps();
-        }); 
+        });
     }
 
     /**
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('group_user');
+        Schema::dropIfExists('forum_users');
     }
 };
