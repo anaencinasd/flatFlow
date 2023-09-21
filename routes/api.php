@@ -9,6 +9,7 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\StatusController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Group_userController;
 
 
 
@@ -43,7 +44,7 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanc
 
 Route::post('/addusertogroup', [Group_userController::class, 'addUserToGroup'])->name('addUserToGroup');
 Route::post('/removeuserfromgroup', [Group_userController::class, 'removeUserFromGroup'])->name('removeUserFromGroup');
-Route::post('/getgroups', [Group_userController::class, 'getGroupsForUser'])->name('getGroupsForUser');
+
 
 
 
@@ -69,6 +70,8 @@ Route::resource('/expense', ExpenseController::class);
 Route::resource('/forum', ForumController::class);
 Route::resource('/group', GroupController::class);
 Route::resource('/status', StatusController::class);
+
+Route::get('/getgroups', [Group_userController::class, 'getGroupsForUser'])->name('getGroupsForUser');
        
 });
 
