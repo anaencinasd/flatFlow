@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class GroupRequest extends FormRequest
 {
@@ -21,9 +22,9 @@ class GroupRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name'=>'required|max:255|min:3',
-            'picprofile'=>'nullable'
-        ];
-    }
+        return ['name'=>'required|max:255|min:3',
+        'picprofile'=>'required',
+    ];
+}
+            
 }

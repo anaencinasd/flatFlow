@@ -39,11 +39,20 @@ Route::post('/user', [UserController::class, 'store']);
 Route::post('/register', [UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+// Route::get('user/findByUsername/{username}', [UserController::class, 'findByUsername']);
+Route::get('user/findByUsername', [UserController::class, 'findByUsername']);
+
+
+
 
 //Group_user routes
 
-Route::post('/addusertogroup', [Group_userController::class, 'addUserToGroup'])->name('addUserToGroup');
-Route::post('/removeuserfromgroup', [Group_userController::class, 'removeUserFromGroup'])->name('removeUserFromGroup');
+Route::post('/addusertogroup/{group}/{user}', [Group_userController::class, 'addUserToGroup'])->name('addUserToGroup');
+Route::delete('/removeuserfromgroup/{group}/{user}', [Group_userController::class, 'removeUserFromGroup'])->name('removeUserFromGroup');
+Route::get('/getUsersForGroup/{group}', [Group_userController::class, 'getUsersForGroup'])->name('getUsersForGroup');
+
+
+
 
 
 
@@ -72,6 +81,8 @@ Route::resource('/group', GroupController::class);
 Route::resource('/status', StatusController::class);
 
 Route::get('/getgroups', [Group_userController::class, 'getGroupsForUser'])->name('getGroupsForUser');
+
+
        
 });
 

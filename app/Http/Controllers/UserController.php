@@ -128,5 +128,28 @@ class UserController extends Controller
             'message' => 'Sesión cerrada exitosamente',
         ]);
     }
+
+//     public function findByUsername($username)
+// {
+//     $user = User::where('username', $username)->first();
+
+//     if ($user) {
+//         return response()->json(['data' => $user], 200);
+//     } else {
+//         return response()->json(['message' => 'Usuario no encontrado'], 404);
+//     }
+// }
+public function findByUsername(Request $request)
+{
+    $username = $request->input('username'); 
+
+    $user = User::where('username', $username)->first();
+
+    if ($user) {
+        return response()->json(['data' => $user], 200);
+    } else {
+        return response()->json(['message' => 'Usuario no encontrado'], 404);
+    }
+}
     
 }
