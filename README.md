@@ -35,7 +35,7 @@ To clone and set up the FlatFlow backend, follow these steps:
    git clone <repository-url>
    cd backend
    ```
-2. ** Install Dependencies:**
+2. **Install Dependencies:**
 
 Run the following command to install all the required dependencies for the project:
 
@@ -48,7 +48,7 @@ composer install
 Create a database in MariaDB and configure the .env file with your database credentials:
 
 env
-``````bash
+```bash
 DB_CONNECTION=mysql
 DB_HOST=your_database_host
 DB_PORT=your_database_port
