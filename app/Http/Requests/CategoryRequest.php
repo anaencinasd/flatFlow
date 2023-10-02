@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,15 +19,10 @@ class UserRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-
     public function rules(): array
     {
         return [
-            'username'=>'required|max:255|min:3',
-            'email'=>'required|email|unique:users,email',
-            'password'=>'required',
-            'picprofile'=>'required'
-            
+            'type'=>'required|',
         ];
     }
 }

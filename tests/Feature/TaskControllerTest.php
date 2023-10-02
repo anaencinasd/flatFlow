@@ -9,19 +9,10 @@ use App\Models\Task;
 use SebastianBergmann\FileIterator\Factory;
 use Illuminate\Support\Facades\DB;
 use CreatesApplication;
-
+use App\Models\User;
 
 class TaskControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    // public function test_example(): void
-    // {
-    //     $response = $this->get('/');
-
-    //     $response->assertStatus(200);
-    // }
 
     
 
@@ -42,16 +33,33 @@ class TaskControllerTest extends TestCase
     }
 
 
-    public function testIndexTask(){
-        $task = Task::factory(20)->make();
+    // public function testIndexTask(){
+    //     $task = Task::factory(20)->make();
 
-        $response = $this->get('/api/task');
-        $response->assertJsonStructure([
-            'data'=>[
-                '*'=>['id', 'title', 'description', 'id_user', 'id_status']
-            ]
-        ])->assertStatus(200);
-    }
+    //     $response = $this->get('/api/task');
+    //     $response->assertJsonStructure([
+    //         'data'=>[
+    //             '*'=>['id', 'title', 'description', 'id_user', 'id_status']
+    //         ]
+    //     ])->assertStatus(200);
+    // }
+
+    public function testIndexTask()
+{
+    
+    $user = User::factory()->create();
+
+    
+    $tasks = Task::factory(20)->create(['id_user' => $user->id]);
+
+    $response = $this->get('/api/task');
+    $response->assertJsonStructure([
+        'data' => [
+            '*' => ['id', 'title', 'description', 'id_user', 'id_status']
+        ]
+    ])->assertStatus(200);
+}
+
 
     public function testStoreTask(){
         $task = Task::factory()->make();
@@ -91,7 +99,11 @@ class TaskControllerTest extends TestCase
 
     public function testUpdateTask()
 {
-    $task = Task::factory()->create(); 
+    
+    $task = Task::factory()->create([
+        'id_group' => 1, 
+    ]);
+    
 
     $updated = [
         'title' => 'new title',
@@ -116,7 +128,10 @@ class TaskControllerTest extends TestCase
 public function testShowTask()
 {
     
-        $task=Task::factory()->create();
+    $task = Task::factory()->create([
+        'id_group' => 1, 
+    ]);
+    
     
         $response=$this->json('GET', "/api/task/$task->id");
         $response->assertStatus(200);
@@ -129,7 +144,10 @@ public function testShowTask()
 
     public function testDestroyTask()
 {
-    $task = Task::factory()->create();
+    $task = Task::factory()->create([
+        'id_group' => 1, 
+    ]);
+    
 
     $this->json('DELETE', "/api/task/$task->id" )
     ->assertOk();

@@ -10,17 +10,7 @@ use App\Models\User;
 class Group_userController extends Controller
 {
 
-    // public function addUserToGroup(Request $request)
-    // {
-    //     $groupUser = new GroupUser();
-    //     $groupUser->id_user = $request->id_user;
-    //     $groupUser->id_group = $request->id_group;
-    //     $groupUser->save();
-
-       
-    //     return response()->json(['message' => 'Usuario añadido al grupo'], 201);
-    // }
-
+   
     public function addUserToGroup(Request $request, $id_group, $id_user)
 {
     $groupUser = new GroupUser();

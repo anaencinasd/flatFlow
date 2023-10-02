@@ -10,6 +10,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\StatusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Group_userController;
+use App\Http\Controllers\CategoryController;
 
 
 
@@ -79,6 +80,9 @@ Route::resource('/expense', ExpenseController::class);
 Route::resource('/forum', ForumController::class);
 Route::resource('/group', GroupController::class);
 Route::resource('/status', StatusController::class);
+Route::resource('/category', CategoryController::class);
+
+
 
 Route::get('/getgroups', [Group_userController::class, 'getGroupsForUser'])->name('getGroupsForUser');
 

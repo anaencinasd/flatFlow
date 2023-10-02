@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('message');
-            $table->bigInteger('id_user');
+            $table->bigInteger('id_user')->default(1);
             $table->timestamps();
         });
     }

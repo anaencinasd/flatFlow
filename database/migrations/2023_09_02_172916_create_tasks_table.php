@@ -16,10 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->bigInteger('id_user');
-            $table->bigInteger('id_group');
+            $table->bigInteger('id_group')->default(1);
             $table->bigInteger('id_status')->default(1);
-            $table->date('deadline');
-            $table->bigInteger('id_category');
+            $table->bigInteger('id_category')->nullable();
             $table->timestamps();
         });
     }
